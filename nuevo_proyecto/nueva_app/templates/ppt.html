@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra, Papel o Tijeras</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'style/jiji.css' %}"
+    />
+  </head>
+  <body>
+    <header class="navbar">
+      <h1>
+        Curso diseño de paginas web
+        <svg
+          width="50"
+          height="50"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2"
+            stroke="white"
+            stroke-width="2"
+          />
+          <line x1="3" y1="8" x2="21" y2="8" stroke="white" stroke-width="2" />
+          <line
+            x1="3"
+            y1="14"
+            x2="21"
+            y2="14"
+            stroke="white"
+            stroke-width="2"
+          />
+          <line x1="8" y1="3" x2="8" y2="21" stroke="white" stroke-width="2" />
+          <line
+            x1="16"
+            y1="3"
+            x2="16"
+            y2="21"
+            stroke="white"
+            stroke-width="2"
+          />
+        </svg>
+      </h1>
+      <nav>
+        <a
+          href="{% url 'mipag' %}"
+          target="_self"
+          style="
+            box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+            border-radius: 8px;
+          "
+          >HTML
+        </a>
+        <a
+          href="{% url 'ppt' %}"
+          target="_self"
+          style="
+            box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+            border-radius: 8px;
+          "
+          >JAVA SCRIPT
+        </a>
+        <a
+          href="CSSRESUMEN.html"
+          target="_self"
+          style="
+            box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+            border-radius: 8px;
+          "
+          >CSS
+        </a>
+        <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+      </nav>
+    </header>
+    <!-- Pantalla de inicio -->
+    <div id="pantalla-inicio">
+      <h2>Bienvenido a Piedra, Papel o Tijeras</h2>
+      <button id="comenzar">Comenzar</button>
+    </div>
+
+    <!-- Aparece despues de dar al boton comenzar -->
+    <div class="container" id="juego" style="display: none">
+      <h2>Piedra, Papel o Tijeras</h2>
+      <div class="choices">
+        <button class="choice" id="piedra">🪨</button>
+        <button class="choice" id="papel">📜</button>
+        <button class="choice" id="tijeras">✂️</button>
+      </div>
+
+      <p id="resultado">¡Elige una opción!</p>
+      <p>
+        <!--el strong me lo ha puesto chatgpt con indicacion mia de que resaltase esa parte-->
+        <strong>Jugador:</strong> <span id="player-score">0</span> -
+        <strong>CPU:</strong> <span id="cpu-score">0</span>
+      </p>
+
+      <!-- Gráfico SVG (con ayuda de chatgpt)-->
+      <svg width="300" height="100" class="score-chart">
+        <rect x="10" y="40" width="120" height="20" fill="#ddd" />
+        <rect x="170" y="40" width="120" height="20" fill="#ddd" />
+        <rect id="player-bar" x="10" y="40" width="0" height="20" fill="blue" />
+        <rect id="cpu-bar" x="170" y="40" width="0" height="20" fill="red" />
+      </svg>
+    </div>
+
+    <!-- Pantalla de victoria o derrota (oculta al inicio) -->
+    <div id="pantalla-final" style="display: none">
+      <h1 id="mensaje-final"></h1>
+      <button id="reiniciar">Reiniciar</button>
+    </div>
+    {% load static %}
+    <script src="{% static 'js/piedra.js' %}"></script>
+  </body>
+</html>

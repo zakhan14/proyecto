@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Indice Tutorial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/xd.css' %}" />
+    <style></style>
+
+    <script src=""></script>
+  </head>
+
+  <body>
+    <div>
+      <header class="navbar">
+        <h1>
+          Curso diseño de paginas web
+          <svg
+            width="50"
+            height="50"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="2"
+              stroke="white"
+              stroke-width="2"
+            />
+            <line
+              x1="3"
+              y1="8"
+              x2="21"
+              y2="8"
+              stroke="white"
+              stroke-width="2"
+            />
+            <line
+              x1="3"
+              y1="14"
+              x2="21"
+              y2="14"
+              stroke="white"
+              stroke-width="2"
+            />
+            <line
+              x1="8"
+              y1="3"
+              x2="8"
+              y2="21"
+              stroke="white"
+              stroke-width="2"
+            />
+            <line
+              x1="16"
+              y1="3"
+              x2="16"
+              y2="21"
+              stroke="white"
+              stroke-width="2"
+            />
+          </svg>
+        </h1>
+        <nav>
+          <a
+            href="{% url 'mipag' %}"
+            target="_self"
+            style="
+              box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+              border-radius: 8px;
+            "
+            >HTML
+          </a>
+          <a
+            href="{% url 'ppt' %}"
+            target="_self"
+            style="
+              box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+              border-radius: 8px;
+            "
+            >JAVA SCRIPT
+          </a>
+          <a
+            href="CSSRESUMEN.html"
+            target="_self"
+            style="
+              box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+              border-radius: 8px;
+            "
+            >CSS
+          </a>
+          <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+        </nav>
+      </header>
+      <main>
+        <section id="section">
+          <h2>HTML</h2>
+          <p>Contenido de HTML</p>
+        </section>
+      </main>
+      <main>
+        <section id="section">
+          <h2>JAVASCRIPT</h2>
+          <p>Contenido de JAVASCRIPT</p>
+        </section>
+      </main>
+      <main>
+        <section id="section">
+          <h2>CSS</h2>
+          <p>Contenido de CSS</p>
+        </section>
+      </main>
+    </div>
+    <footer>
+      <p>&copy; 2023 Mi Página Web. Ninguno de los derechos reservados.</p>
+    </footer>
+  </body>
+</html>

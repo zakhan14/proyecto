@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form_Web</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'style/estilos.css' %}"
+    />
+    <style></style>
+  </head>
+
+  <body>
+    <h1>Welcome</h1>
+
+    {% if user.is_authenticated %}
+    <p>Hola, {{user.username}}</p>
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+    {% else %}
+    <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% endif %} {% for mensaje in massage %}
+    <p style="color: green">{{mensaje}}</p>
+
+    {% endfor %}
+  </body>
+</html>
