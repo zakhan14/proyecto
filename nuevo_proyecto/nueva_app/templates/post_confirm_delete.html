@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Crea un nuevo Post{% endblock %}
+
+{% block content %}
+    <h4>¿Borrar el Post?</h4>
+    <p>{{ object.title }}</p>
+    <p>{{ object.content |truncatechars:20 }}...</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Si, borrar comentario</button>
+    </form>
+    <a href="{% url 'post_detail' object.pk %}">Cancelar</a>
+    {% endblock %}
