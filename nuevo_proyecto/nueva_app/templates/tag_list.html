@@ -2,9 +2,11 @@
 {% block title%} Post List {% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
 <h1 class="titulo">Lista de Tags</h1>
-<a href="{% url 'post_list' %}">Lista de posts</a>
-<a href="{% url 'tag_create' %}">Crea un nuevo tag</a>
+<a href="{% url 'post_list' %}" class="Postear">Lista de posts</a>
+<a href="{% url 'tag_create' %}" class="Postear">Crea un nuevo tag</a>
 <ul>
     {% for tag in object_list %}
 
@@ -13,7 +15,7 @@
             <p>{{ tag.name }}</p>
             
         </li>
-        <a href="{% url 'tag_delete' tag.pk %}">Eliminar tag?</a>
+        <a href="{% url 'tag_delete' tag.pk %}" class="Postear">Eliminar tag?</a>
     {% endfor %}
 </div>
 {% endblock %}

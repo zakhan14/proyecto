@@ -3,6 +3,8 @@
 {% block title %}Detalles del Post{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
     <h1>{{ object.title }}</h1>
     <p>{{ object.content }}</p>
     <p>Creado por: {{object.author}}</p>
@@ -15,10 +17,15 @@
         </li>
     </ul>
     {% endfor %}
-    <a href="{% url 'post_update' object.pk %}">Editar</a>
-    <a href="{% url 'post_delete' object.pk %}">Eliminar</a>
+    <a href="{% url 'post_update' object.pk %}" class="Postear">Editar</a>
+    <a href="{% url 'post_delete' object.pk %}" class="Postear" >Eliminar</a>
     
     <h2>Comentarios</h2>
+    <h2>Crea un nuevo Post</h2>
+    <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="Postear"> Comenta </button>
     {% for comment in object.comment_set.all %}
         <hr>
         <div>

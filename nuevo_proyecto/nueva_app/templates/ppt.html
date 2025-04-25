@@ -8,7 +8,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'style/jiji.css' %}"
+      href="{% static 'style/yess.css' %}"
     />
   </head>
   <body>
@@ -71,14 +71,14 @@
           >JAVA SCRIPT
         </a>
         <a
-          href="CSSRESUMEN.html"
-          target="_self"
-          style="
-            box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
-            border-radius: 8px;
-          "
-          >CSS
-        </a>
+            href="{% url 'post_list' %}"
+            target="_self"
+            style="
+              box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+              border-radius: 8px;
+            "
+            >POST
+          </a>
         <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
       </nav>
     </header>

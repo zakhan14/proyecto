@@ -21,7 +21,12 @@
     {% endfor %}
 
     <form method="POST">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %}
+      {{ form.as_p }}
+      <label style="color: white;">
+        <input type="checkbox" name="remember_me">
+        Recuérdame
+      </label>
       <button type="submit">Iniciar Sesión</button>
     </form>
 

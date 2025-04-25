@@ -3,12 +3,14 @@
 {% block title%} Edita Post {% endblock %}
  
 {% block content %}
-<h2>Crea un nuevo Post</h2>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
+<h1>Crea un nuevo Post</h1>
 <form method="POST">
    {% csrf_token %}
    {{ form.as_p }}
-   <button type="submit"> Edita el Post </button>
+   <button type="submit" class="Postear"> Edita el Post </button>
 </form>
-<a href="{% url 'post_detail' object.pk %}">Cancelar</a>
+<a href="{% url 'post_detail' object.pk %}" class="Postear">Cancelar</a>
 
 {% endblock %}

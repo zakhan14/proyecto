@@ -3,6 +3,8 @@
 {% block title %}Crea un nuevo Post{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
     <h4>¿Borrar el Post?</h4>
     <p>{{ object.title }}</p>
     <p>{{ object.content |truncatechars:20 }}...</p>

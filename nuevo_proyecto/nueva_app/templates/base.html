@@ -12,12 +12,34 @@
       media="screen"
       href='{% static "css/style.css" %}'
     />
+    <style>
+      #cookie_banner{
+        position: fixed; bottom: 0; left: 0;right: 0; 
+        background: rgb(255, 68, 0); 
+        color: white;
+        padding: 1rem;
+        text-align: center;
+
+      }
+
+      #cookie-banner button{
+        margin: 0 .5rem;
+      }
+    </style>
     <script src='{% static "js/main.js" %}'></script>
   </head>
-  <body>
-    <nav class="navbar">
-      <a href='{% url "post_list" %}' class="navbar_a">Blog</a>
-    </nav>
-    <div class="container">{%block content %}{% endblock %}</div>
+  <body class="{% if request.session.theme == 'dark' %}dark-mode{% else %}light-mode{% endif %}">
+    <div class="container">
+      {%block content %}{% endblock %}
+    </div>
+    <div id="cookie-banner">
+      Usamos Cookies analíticas para mejorar la web
+      <button id="btn-accept">Aceptar todas las cookies</button>
+      <button id="btn-reject">Rechazar todas las cookies</button>
+      <a href="{% url 'politica_cookies' %}">
+        ¡Léete las leyes de los cojones!
+      </a>
+    </div>
   </body>
+  <script src="{% url 'js/cookie-consent.js' %}"></script>
 </html>

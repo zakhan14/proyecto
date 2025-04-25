@@ -2,9 +2,93 @@
 {% block title%} Post List {% endblock %}
 
 {% block content %}
-<h1 class="titulo">Lista de posts</h1>
-<a href="{% url 'post_create' %}">Crea un  nuevo Post</a>
-<a href="{% url 'tag_list' %}">Lista de tags</a>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
+<h1 class="titulo">Lista de posts          
+    <svg
+    width="50"
+    height="50"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="3"
+      y="3"
+      width="18"
+      height="18"
+      rx="2"
+      stroke="white"
+      stroke-width="2"
+    />
+    <line
+      x1="3"
+      y1="8"
+      x2="21"
+      y2="8"
+      stroke="white"
+      stroke-width="2"
+    />
+    <line
+      x1="3"
+      y1="14"
+      x2="21"
+      y2="14"
+      stroke="white"
+      stroke-width="2"
+    />
+    <line
+      x1="8"
+      y1="3"
+      x2="8"
+      y2="21"
+      stroke="white"
+      stroke-width="2"
+    />
+    <line
+      x1="16"
+      y1="3"
+      x2="16"
+      y2="21"
+      stroke="white"
+      stroke-width="2"
+    />
+  </svg>
+</h1> <nav>
+    <a
+      href="{% url 'mipag' %}"
+      target="_self"
+      style="
+        box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+        border-radius: 8px;
+        color: white;
+      "
+      >HTML
+    </a>
+    <a
+      href="{% url 'ppt' %}"
+      target="_self"
+      style="
+        box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+        border-radius: 8px;
+        color: white;
+      "
+      >JAVA SCRIPT
+    </a>
+    <a
+      href="{% url 'post_list' %}"
+      target="_self"
+      style="
+        box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
+        border-radius: 8px;
+        color: white;
+      "
+      >POST
+    </a>
+    <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+  </nav>
+<a href="{% url 'post_create' %}" class="Postear">Crea un  nuevo Post</a>
+<a href="{% url 'tag_list' %}" class="Postear">Lista de tags</a>
 <div class="grid">
     {% for post in object_list %}
         <div class="tarjeta">
@@ -15,6 +99,7 @@
                 <a href="{% url 'post_list_by_tag' tag.pk %}"><p>{{ tag.name }}</p></a>
             {% endfor %}
         </div>
+        <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
     {% endfor %}
 </div>
 {% endblock %}

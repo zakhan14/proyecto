@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css?family=Bangers");
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #000000, #5d606b);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h1 {
+  font-family: Bangers;
+  font-size: 4em;
+  background: linear-gradient(
+    to top,
+    #000000,
+    #ff0000,
+    #000000
+  ); /* Degradado de azul a naranja */
+  -webkit-background-clip: text; /* Aplica el degradado al texto */
+  color: transparent; /* Hace que el color del texto sea transparente para que se vea el degradado */
+  margin-top: 2%;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Estilos para enlaces */
+a {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 10px 5px;
+  transition: background 0.3s;
+}
+button,
+a {
+  background-color: #000000;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
+  margin: 10px 5px;
+  transition: background 0.3s;
+}
+
+button:hover,
+a:hover {
+  background-color: #8b0000; /* Rojo oscuro */
+}
+
+/* Estilos para mensajes */
+p[style*="color: green"] {
+  font-weight: bold;
+  margin-top: 10px;
+}

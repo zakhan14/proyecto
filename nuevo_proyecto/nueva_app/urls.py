@@ -10,6 +10,8 @@ from .views import TagListView, TagCreateView, TagDeleteView, PostbyTagView
 urlpatterns = [
     path('', views.home, name='home' ),
     path('login/', views.loginView, name='login'),
+    path('mipag/', views.mipag, name='mipag'),
+    path('ppt/', views.ppt, name='ppt'),
     path('registro/', views.registroView, name='registro'),
     path('logout/', views.logoutView, name='logout'),
     path('post/', PostListView.as_view(), name='post_list'),
@@ -20,7 +22,8 @@ urlpatterns = [
     path('tags/', TagListView.as_view(), name='tag_list'),
     path('tags/newtag/', TagCreateView.as_view(), name='tag_create'),
     path('tags/<int:pk>/delete/', TagDeleteView.as_view(), name='tag_delete'),
-    path('post_by_tag/<int:pk>/', PostbyTagView.as_view(), name='post_list_by_tag')
+    path('post_by_tag/<int:pk>/', PostbyTagView.as_view(), name='post_list_by_tag'),
+    path('politica-cookies/', views.politica_cookies, name='politica_cookies'),
 ]
 
 # urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

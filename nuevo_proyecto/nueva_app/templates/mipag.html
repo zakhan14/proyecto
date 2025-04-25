@@ -87,15 +87,16 @@
             >JAVA SCRIPT
           </a>
           <a
-            href="CSSRESUMEN.html"
+            href="{% url 'post_list' %}"
             target="_self"
             style="
               box-shadow: 3px 3px 3px #1e3b59 (128, 128, 128, 0.512);
               border-radius: 8px;
             "
-            >CSS
+            >POST
           </a>
           <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+          <a href="{% url 'modo_claro' %}">Modo claro</a>
         </nav>
       </header>
       <main>
@@ -112,8 +113,8 @@
       </main>
       <main>
         <section id="section">
-          <h2>CSS</h2>
-          <p>Contenido de CSS</p>
+          <h2>POST</h2>
+          <p>Contenido de POST</p>
         </section>
       </main>
     </div>
