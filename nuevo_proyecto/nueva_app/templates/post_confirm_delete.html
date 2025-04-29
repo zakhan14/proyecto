@@ -10,7 +10,8 @@
     <p>{{ object.content |truncatechars:20 }}...</p>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Si, borrar comentario</button>
+        <button type="submit" class="Postear">Si, borrar comentario</button>
     </form>
-    <a href="{% url 'post_detail' object.pk %}">Cancelar</a>
+    <a href="{% url 'post_detail' object.pk %}" class="Postear">Cancelar</a>
+    <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
     {% endblock %}

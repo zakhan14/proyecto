@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 404 - Página no encontrada</title>
+    <link rel="stylesheet" href="{% static 'error.css' %}">
+</head>
+<body>
+    <h1 class="error-code">404</h1>
+    <p class="error-message">Página no encontrada</p>
+    <p class="error-description">Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+    <a href="{% url 'home' %}" class="button">Volver al inicio</a>
+</body>
+</html>
+{% endblock %}

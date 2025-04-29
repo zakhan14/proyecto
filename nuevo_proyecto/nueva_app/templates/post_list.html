@@ -4,57 +4,7 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
-<h1 class="titulo">Lista de posts          
-    <svg
-    width="50"
-    height="50"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect
-      x="3"
-      y="3"
-      width="18"
-      height="18"
-      rx="2"
-      stroke="white"
-      stroke-width="2"
-    />
-    <line
-      x1="3"
-      y1="8"
-      x2="21"
-      y2="8"
-      stroke="white"
-      stroke-width="2"
-    />
-    <line
-      x1="3"
-      y1="14"
-      x2="21"
-      y2="14"
-      stroke="white"
-      stroke-width="2"
-    />
-    <line
-      x1="8"
-      y1="3"
-      x2="8"
-      y2="21"
-      stroke="white"
-      stroke-width="2"
-    />
-    <line
-      x1="16"
-      y1="3"
-      x2="16"
-      y2="21"
-      stroke="white"
-      stroke-width="2"
-    />
-  </svg>
-</h1> <nav>
+<h1 class="titulo">Lista de posts </h1> <nav>
     <a
       href="{% url 'mipag' %}"
       target="_self"
@@ -95,9 +45,12 @@
             <h2>{{ post.title }}</h2>
             <p>{{ post.content|truncatechars:10}}</p>
             <a href="{% url 'post_detail' post.pk %}">Lee el post</a>
+
+            <ul><p style="font-size: small; margin-top: 10px;">Tags:</p>
             {% for tag in post.tags.all %}
-                <a href="{% url 'post_list_by_tag' tag.pk %}"><p>{{ tag.name }}</p></a>
+                <li><a href="{% url 'post_list_by_tag' tag.pk %}"><p>{{ tag.name }}</p></a></li>
             {% endfor %}
+          </ul>
         </div>
         <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
     {% endfor %}

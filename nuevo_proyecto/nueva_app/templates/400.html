@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 400 - Petición Incorrecta</title>
+    <link rel="stylesheet" href="{% static 'error.css' %}">
+</head>
+<body>
+    <h1 class="error-code">400</h1>
+    <p class="error-message">Petición incorrecta</p>
+    <p class="error-description">La solicitud no pudo ser procesada. Por favor, verifica los datos enviados.</p>
+    <a href="{% url 'home' %}" class="button">Volver al inicio</a>
+</body>
+</html>
+
+{% endblock %}

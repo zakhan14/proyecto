@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
-{% block title%} Post List {% endblock %}
+
+{% block title %}
+    Post List
+{% endblock %}
 
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
-<h1 class="titulo">Lista de posts por Tag: {{ tag.name }}</h1>
-<a href="{% url 'post_create' %}">Crea un  nuevo Post</a>
-<a href="{% url 'tag_list' %}">Lista de tags</a>
+
+<h1 class="titulo">Lista de posts por Tag: {{ tag.name }}</h1>  <!-- Mostramos el nombre del tag -->
+
+<a href="{% url 'post_create' %}" class="Postear">Crea un nuevo Post</a>
+<a href="{% url 'tag_list' %}" class="Postear">Lista de tags</a>
+
 <div class="grid">
-    {% for post in object_list %}
+    {% for post in object_list %}  <!-- Listamos los posts filtrados por tag -->
         <div class="tarjeta">
             <h2>{{ post.title }}</h2>
-            <p>{{ post.content|truncatechars:10}}</p>
+            <p>{{ post.content|truncatechars:10 }}</p>  <!-- Muestra un resumen del post -->
             <a href="{% url 'post_detail' post.pk %}">Lee el post</a>
-            {% for tag in post.tags.all %}
-                <a href="{% url 'post_list_by_tag' tag.pk %}"><p>{{ tag.name }}</p></a>
+
+            {% for tag in post.tags.all %}  <!-- Mostramos los tags asociados al post -->
+                <a href="{% url 'post_list_by_tag' pk=tag.pk %}"><p>{{ tag.name }}</p></a>
             {% endfor %}
         </div>
+    {% empty %}
+        <p>No hay posts para este tag.</p>  <!-- Si no hay posts asociados al tag, mostramos este mensaje -->
     {% endfor %}
 </div>
+<a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+
 {% endblock %}

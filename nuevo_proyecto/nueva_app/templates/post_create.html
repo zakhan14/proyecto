@@ -1,14 +1,21 @@
-{% extends 'base.html' %}
-
-{% block title %}Crea un nuevo Post{% endblock %}
+ {% extends "base.html" %}
 
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
- <h2>Crea un nuevo Post</h2>
- <form method="POST">
+  <h2>Crear un nuevo post</h2>
+  
+  <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit"> Compartir </button>
- </form>
- {% endblock %}
+    {{ form.as_p }}  <!-- Muestra el formulario generado por Django -->
+    
+    <!-- Campo para los tags -->
+    <p>
+      <label for="id_tag_string">Tags (separados por comas):</label><br>
+      <input type="text" name="tag_string" id="id_tag_string" value="{{ form.tag_string.value|default:'' }}">
+    </p>
+
+    <button type="submit" class="Postear">Crear Post</button>
+  </form>
+  <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
+{% endblock %}

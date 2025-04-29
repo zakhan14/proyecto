@@ -1,14 +1,10 @@
-from nuevo_proyecto.urls import path, include
+from django.urls import path
 from . import views
 from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
-from .views import TagListView, TagCreateView, TagDeleteView, PostbyTagView
-
-
-
-
+from .views import TagListView, TagCreateView, TagDeleteView, PostbyTagView  # Importación corregida
 
 urlpatterns = [
-    path('', views.home, name='home' ),
+    path('', views.home, name='home'),
     path('login/', views.loginView, name='login'),
     path('mipag/', views.mipag, name='mipag'),
     path('ppt/', views.ppt, name='ppt'),
@@ -22,8 +18,8 @@ urlpatterns = [
     path('tags/', TagListView.as_view(), name='tag_list'),
     path('tags/newtag/', TagCreateView.as_view(), name='tag_create'),
     path('tags/<int:pk>/delete/', TagDeleteView.as_view(), name='tag_delete'),
-    path('post_by_tag/<int:pk>/', PostbyTagView.as_view(), name='post_list_by_tag'),
+    path('post_by_tag/<int:pk>/', PostbyTagView.as_view(), name='post_list_by_tag'),  # URL corregida
     path('politica-cookies/', views.politica_cookies, name='politica_cookies'),
-]
+    path('tags/<int:pk>/posts/', PostbyTagView.as_view(), name='post_by_tag'),
 
-# urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

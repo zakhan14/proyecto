@@ -7,6 +7,7 @@ from .forms import RegistroForm, LoginForm, PostForm, CommentForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Tag, Comment
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 
@@ -14,18 +15,18 @@ from django.urls import reverse_lazy, reverse
 
 class PostListView(ListView):
     model = Post
-    template_name= "post_list.html"
+    template_name = "post_list.html"
 
-class PostDetailView(FormMixin,DetailView):
+class PostDetailView(FormMixin, DetailView):
     model = Post
     template_name = "post_detail.html"
-    form_class= CommentForm
+    form_class = CommentForm
    
     def get_success_url(self):
         return reverse('post_detail', kwargs={'pk': self.object.pk})
     
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs) 
+        context = super().get_context_data(**kwargs) 
         if 'form' not in context:
             context['form'] = self.get_form()
         return context
@@ -42,38 +43,35 @@ class PostDetailView(FormMixin,DetailView):
     def form_valid(self, form):
         comment = form.save(commit=False)
         comment.author = self.request.user
-        comment.post =self.object
+        comment.post = self.object
         comment.save()
 
         return redirect(self.get_success_url())
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content']  # ✅ CORRECTO
     template_name = "post_create.html"
     success_url = reverse_lazy('post_list')
 
     def form_valid(self, form):
+        # Guardamos el post, pero aún no le asignamos el id
         post = form.save(commit=False)
         post.author = self.request.user
-        post.save()
-        
+        post.save()  # Aquí le damos un id al post al guardarlo en la base de datos
 
-        tag_string = form.cleaned_data.get('tag_string', '')
+        # Luego de guardar el post, añadimos los tags
+        tag_string = self.request.POST.get('tag_string', '')
         if tag_string:
-            tag_names =[t.strip() for t in tag_string.split(',') if t.strip()]
+            tag_names = [t.strip() for t in tag_string.split(',') if t.strip()]
             for name in tag_names:
-                exists= Tag.objects.filter(name__iexact=name).exists()
-                if not exists:
-                    new_tag =Tag.objects.create(name=name)
-                    post.tags.add(new_tag)
-                else:
-                    existing_tag = Tag.objects.get(name__iexact=name)
-                    post.tags.add(existing_tag)
+                tag, _ = Tag.objects.get_or_create(name__iexact=name, defaults={'name': name})
+                post.tags.add(tag)  # Añadimos el tag al post
 
         return super().form_valid(form)
 
-class PostUpdateView (UpdateView):
+
+class PostUpdateView(UpdateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'post_form.html'
@@ -86,11 +84,11 @@ class PostUpdateView (UpdateView):
 
         tag_string = form.cleaned_data.get('tag_string', '')
         if tag_string:
-            tag_names =[t.strip() for t in tag_string.split(',') if t.strip()]
+            tag_names = [t.strip() for t in tag_string.split(',') if t.strip()]
             for name in tag_names:
-                exists= Tag.objects.filter(name__iexact=name).exists()
+                exists = Tag.objects.filter(name__iexact=name).exists()
                 if not exists:
-                    new_tag =Tag.objects.create(name=name)
+                    new_tag = Tag.objects.create(name=name)
                     post.tags.add(new_tag)
                 else:
                     existing_tag = Tag.objects.get(name__iexact=name)
@@ -102,7 +100,20 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post_confirm_delete.html'
     success_url = reverse_lazy('post_list')
-#vistas para gestionar Tag
+
+class PostByTagView(ListView):
+    model = Post
+    template_name = 'post_list_by_tag.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # Obtener el tag por su pk
+        tag = Tag.objects.get(id=self.kwargs['pk'])
+        # Filtrar los posts que tienen ese tag
+        return Post.objects.filter(tags=tag)
+
+
+# Vistas para gestionar Tag
 class TagListView(ListView):
     model = Tag
     template_name = "tag_list.html"
@@ -117,46 +128,60 @@ class TagCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
 class TagDeleteView(DeleteView):
     model = Tag
     template_name = 'tag_confirm_delete.html'
     success_url = reverse_lazy('tag_list')
 
+# views.py
+from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Post, Tag
+
 class PostbyTagView(ListView):
     model = Post
-    template_name= "post_list_by_tag.html"
+    template_name = 'post_list_by_tag.html'
+    context_object_name = 'object_list'
 
+    def get_queryset(self):
+        tag = Tag.objects.get(id=self.kwargs['pk'])
+        return Post.objects.filter(tags=tag)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = Tag.objects.get(id=self.kwargs['pk'])
+        context['tag'] = tag
+        return context
 
-# Create your views here.
+# Vistas de login, registro y logout
 def home(request):
-    return render (request, 'home.html')
+    return render(request, 'home.html')
+
 def mipag(request):
-    return render (request, 'mipag.html')
+    return render(request, 'mipag.html')
+
 def ppt(request):
-    return render (request, 'ppt.html')
+    return render(request, 'ppt.html')
+
 def loginView(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            remember= request.POST.get('remember_me')
+            remember = request.POST.get('remember_me')
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                messages.error(request, "Correo no Registrado")
+                messages.error(request, "Correo no registrado")
                 return redirect('login')
-            
-            user_auth= authenticate(request, username=user.username, password=password)
+
+            user_auth = authenticate(request, username=user.username, password=password)
 
             if user_auth is not None:
                 login(request, user_auth)
-
-                if not remember: 
+                if not remember:
                     request.session.set_expiry(0)
-
 
                 messages.success(request, "¡Has iniciado sesión correctamente!")
                 return redirect('mipag')
@@ -177,11 +202,12 @@ def registroView(request):
             return redirect('login')
     else:
         form = RegistroForm()
-    return render(request, 'registro.html', {'form': form})  
+    return render(request, 'registro.html', {'form': form})
 
 def logoutView(request):
     logout(request)
-    messages.info(request, "has cerrado sesión. ¡Vuelve pronto!")
+    messages.info(request, "Has cerrado sesión. ¡Vuelve pronto!")
     return redirect('home')
+
 def politica_cookies(request):
-    return render (request, 'politica_cookies.html') 
+    return render(request, 'politica_cookies.html')

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 500 - Error interno del servidor</title>
+    <link rel="stylesheet" href="{% static 'error.css' %}">
+</head>
+<body>
+    <h1 class="error-code">500</h1>
+    <p class="error-message">Error interno del servidor</p>
+    <p class="error-description">Algo salió mal. Estamos trabajando para solucionarlo.</p>
+    <a href="{% url 'home' %}" class="button">Volver al inicio</a>
+</body>
+</html>
+{% endblock %}

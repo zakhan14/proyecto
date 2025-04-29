@@ -17,9 +17,12 @@
         </li>
     </ul>
     {% endfor %}
+
+    {% if user.is_superuser or user == object.author %}
     <a href="{% url 'post_update' object.pk %}" class="Postear">Editar</a>
     <a href="{% url 'post_delete' object.pk %}" class="Postear" >Eliminar</a>
-    
+    {% endif %}
+
     <h2>Comentarios</h2>
     <h2>Crea un nuevo Post</h2>
     <form method="POST">
@@ -31,5 +34,6 @@
         <div>
             <p>{{ comment.author.username }}:<br> {{ comment.content }}</p>
         </div>
+        <a href="{% url 'logout' %}" class="logout-button">Cerrar sesión</a>
     {% endfor %}
 {% endblock %}

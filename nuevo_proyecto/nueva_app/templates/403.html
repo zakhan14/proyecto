@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 403 - Acceso Denegado</title>
+    <link rel="stylesheet" href="{% static 'error.css' %}">
+</head>
+<body>
+    <h1 class="error-code">403</h1>
+    <p class="error-message">Acceso denegado</p>
+    <p class="error-description">No tienes permisos para acceder a esta página o recurso.</p>
+    <a href="{% url 'home' %}" class="button">Volver al inicio</a>
+</body>
+</html>
+{% endblock %}

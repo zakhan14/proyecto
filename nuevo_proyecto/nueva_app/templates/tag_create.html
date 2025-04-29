@@ -2,10 +2,12 @@
 {% block title %} Crea un nuevo Post {% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style/post.css' %}" />
  <h2>Crea un nuevo Tag</h2>
  <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit"> Postea </button>
+    <button type="submit"  class="Postear"> Postea </button>
  </form>
  {% endblock %}
