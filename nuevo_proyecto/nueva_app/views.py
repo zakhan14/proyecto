@@ -10,6 +10,12 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
+#Imports para API de terceros y Cache
+import requests
+from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+from django.conf import settings
+
 
 # vistas genericas para trabajar CRUD
 
@@ -211,3 +217,51 @@ def logoutView(request):
 
 def politica_cookies(request):
     return render(request, 'politica_cookies.html')
+
+
+#Vista para API de terceros EXCHANGE
+
+#@cache_page(60*30) # 1800s
+def weather (request):
+    city= request.GET.get('city', 'Santander')
+    params = {
+        'q' : city,
+        'units' : 'metric',
+        'appid' : settings.OWN_KEY, 
+        'lang' :'es', 
+    }
+    r = requests.get(
+        'https://api.openweathermap.org/data/2.5/weather',
+        params=params, timeout=5
+    )
+    data = r.json()
+    respuesta = {
+        'city' : data['name'],
+        'temp' : data['main']['temp'],
+        'icon' : data ['weather'][0]['icon'],
+        'desc' : data ['weather'][0]['description'],
+    }
+    return JsonResponse(respuesta)
+
+#EXCHANGE 
+
+
+def exchange(request):
+    from_currency = request.GET.get('from', 'USD')
+    to_currency = request.GET.get('to', 'EUR')
+    amount = float(request.GET.get('amount', 100))
+    key_EXC = settings.EXCHANGE_KEY
+    url = f'https://api.fastforex.io/fetch-all?api_key={key_EXC}'
+
+    try:
+        r = requests.get(url, timeout=5)
+        data = r.json()
+
+        if 'results' in data and to_currency in data['results']:
+            rate = data['results'][to_currency]
+            converted = round(rate * amount, 2)
+            return JsonResponse({'converted': converted})
+        else:
+            return JsonResponse({'error': 'Tasa de cambio no encontrada'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

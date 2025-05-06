@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-%pknitakf#5v^vy643i)n(=@4rynfoy7l%v!9yr@3(3xi=nmt3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 
 # Application definition
@@ -39,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'nueva_app',
     'whitenoise.runserver_nostatic',
+    'rest_framework',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +56,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', 
+    # *MIDDLEWARE, 
 ]
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 ROOT_URLCONF = 'nuevo_proyecto.urls'
 
@@ -77,12 +86,23 @@ WSGI_APPLICATION = 'nuevo_proyecto.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_requiere=True,
+        ) 
 }
 
+        # 'ENGINE':'dajango.db.backends.postgresql_psycog2',
+        # 'HOST':os.getenv('PGHOST'),
+        # 'PORT':os.getenv('PGPORT'),
+        # 'NAME':os.getenv('PGNAME'),
+        # 'USER':os.getenv('PGUSER'),
+        # 'PASSWORD':os.getenv('PGPASSWORD'),
+        #Conexion DB local con sqilete:
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+  
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -120,7 +140,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / 'STATICFILES'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -133,3 +153,36 @@ SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMSITE = 'Lax'
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS":["django_filters.rest_framework.DjangoFilterBackend"],
+}
+
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000']
+
+OWN_KEY = config('OWN_KEY')
+
+CACHES = {
+    'default': {
+        'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': BASE_DIR/'cache',
+    }
+}
+
+#EXCHANGE
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS":["django_filters.rest_framework.DjangoFilterBackend"],
+}
+
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000']
+
+EXCHANGE_KEY = config('EXCHANGE_KEY')
+
+CACHES = {
+    'default': {
+        'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': BASE_DIR/'cache',
+    }
+}

@@ -17,6 +17,7 @@ body {
   text-decoration: none;
 }
 
+
 .logout-button:hover {
   background-color: #5b0000;
 }
@@ -153,3 +154,5 @@ footer {
   padding: 10px 0;
   margin-top: 20px;
 }
+
+/* modo claro/oscuro */

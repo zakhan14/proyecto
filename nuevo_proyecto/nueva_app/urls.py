@@ -21,5 +21,7 @@ urlpatterns = [
     path('post_by_tag/<int:pk>/', PostbyTagView.as_view(), name='post_list_by_tag'),  # URL corregida
     path('politica-cookies/', views.politica_cookies, name='politica_cookies'),
     path('tags/<int:pk>/posts/', PostbyTagView.as_view(), name='post_by_tag'),
+    path('weather/', views.weather,  name='weather'),
+    path('exchange/', views.exchange,  name='exchange'),
 
 ]

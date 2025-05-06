@@ -10,28 +10,30 @@
       rel="stylesheet"
       type="text/css"
       media="screen"
-      href='{% static "css/style.css" %}'
     />
     <style>
-      #cookie_banner{
-        position: fixed; bottom: 0; left: 0;right: 0; 
-        background: rgb(255, 68, 0); 
+      #cookie_banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgb(255, 68, 0);
         color: white;
         padding: 1rem;
         text-align: center;
-
       }
 
-      #cookie-banner button{
+      #cookie-banner button {
         margin: 0 .5rem;
       }
     </style>
-    <script src='{% static "js/main.js" %}'></script>
   </head>
   <body class="{% if request.session.theme == 'dark' %}dark-mode{% else %}light-mode{% endif %}">
     <div class="container">
       {%block content %}{% endblock %}
     </div>
+
+    <!-- Cookie Consent Banner -->
     <div id="cookie-banner">
       Usamos Cookies analíticas para mejorar la web
       <button id="btn-accept">Aceptar todas las cookies</button>
@@ -40,6 +42,59 @@
         ¡Léete las leyes de los cojones!
       </a>
     </div>
+
+    <!-- Weather Information -->
+    <div id="meteo" class="tarjeta">
+      <p>Cargando meteo...</p>
+    </div>
+    
+    <!-- Exchange info -->
+    <div id="exchange" class="tarjeta">
+      <p>Cargando valor...</p>
+    </div>
+    
+    <!-- Exchange fetch script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const exchangeDiv = document.getElementById('exchange');
+        exchangeDiv.innerHTML = '<p>Cargando valor...</p>';
+    
+        fetch('/exchange/?from=USD&to=EUR&amount=100')
+          .then(response => {
+            if (!response.ok) throw new Error('Respuesta inválida');
+            return response.json();
+          })
+          .then(data => {
+            if (data.converted) {
+              exchangeDiv.innerHTML = `<p>100 USD = <strong>${data.converted} EUR</strong></p>`;
+            } else {
+              exchangeDiv.innerHTML = `<p>${data.error || 'Error inesperado'}</p>`;
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            exchangeDiv.innerHTML = '<p>Error al obtener el valor.</p>';
+          });
+      });
+    </script>
+    
+    
+
+    <!-- Weather Fetch Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('/weather/?city=Santander')
+          .then(r => r.json())
+          .then(d => {
+            document.getElementById('meteo').innerHTML = 
+            `<strong>${d.city}</strong><br> 
+            ${d.temp}&nbsp;ºC<br>
+            <img src="https://openweathermap.org/img/wn/${d.icon}@2x.png" alt="${d.desc}" title="${d.desc}"/>`
+          })
+          .catch(() => document.getElementById('meteo').textContent = 'Sin datos');
+      });
+    </script>
+
+    <script src="{% static 'js/cookie_consent.js' %}"></script>
   </body>
-  <script src="{% static 'js/cookie_consent.js' %}"></script>
 </html>
