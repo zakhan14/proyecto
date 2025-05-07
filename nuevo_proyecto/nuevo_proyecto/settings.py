@@ -89,7 +89,7 @@ DATABASES = {
     'default': dj_database_url.parse(
         os.getenv('DATABASE_URL'),
         conn_max_age=600,
-        ssl_requiere=True,
+        ssl_require=True,
         ) 
 }
 
