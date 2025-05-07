@@ -140,7 +140,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -150,7 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 14
 SESSION_SAVE_EVERY_REQUEST = False
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMSITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 
@@ -169,20 +169,5 @@ CACHES = {
         'LOCATION': BASE_DIR/'cache',
     }
 }
-
 #EXCHANGE
-
-REST_FRAMEWORK = {
-    "DEFAULT_FILTER_BACKENDS":["django_filters.rest_framework.DjangoFilterBackend"],
-}
-
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000']
-
 EXCHANGE_KEY = config('EXCHANGE_KEY')
-
-CACHES = {
-    'default': {
-        'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': BASE_DIR/'cache',
-    }
-}
