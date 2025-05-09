@@ -1,19 +1,19 @@
 function cardHTML(post){
     return `
         <div class="tarjeta">
-            <h2>${post.title}</h2>
-            <p>${post.content.substring(0, 10)}...</p>
-            <a href="/posts/${post.pk}">Lee el post</a>
+            <h2>${ post.title }</h2>
+            <p>${ post.content.substring(0, 10) }...</p>
+            <a href="/posts/${ post.id }">Lee el post</a>
 
             <ul><p style="font-size: small; margin-top: 10px;">Tags:</p>
-            ${post.tags.map(
-                t => `<li><a href="/posts_by_tag/${t.id}"><p>${ t.name }</a></li>`
-            ).join('')}
+            ${ post.tags.map(
+                t => `<li><a href="/posts_by_tag/${ t.id }"><p>${ t.name }</a></li>`
+            ).join('') }
             </ul>
         </div>`;
 }
 
-function loadPost(page = 1){
+function loadPosts(page = 1){
     fetch(`/api/posts/?page=${page}`)
         .then(r => r.json())
         .then(json => {
