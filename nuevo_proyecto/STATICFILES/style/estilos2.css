@@ -8,19 +8,7 @@ body {
   text-align: center;
 }
 
-h1 {
-  font-family: Bangers;
-  font-size: 4em;
-  background: linear-gradient(
-    to top,
-    #000000,
-    #ff0000,
-    #000000
-  ); /* Degradado de azul a naranja */
-  -webkit-background-clip: text; /* Aplica el degradado al texto */
-  color: transparent; /* Hace que el color del texto sea transparente para que se vea el degradado */
-  margin-top: 2%;
-}
+
 
 p {
   font-size: 16px;
