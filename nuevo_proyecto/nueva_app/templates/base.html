@@ -6,11 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% block title %} Test CRUD {% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-    />
+    
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="{% static 'style/estilos.css' %}" type="text/css" media="screen">
+
     <style>
       #cookie_banner {
         position: fixed;
@@ -30,7 +29,7 @@
   </head>
   <body class="{% if request.session.theme == 'dark' %}dark-mode{% else %}light-mode{% endif %}">
     <div class="container">
-      {%block content %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
 
     <!-- Cookie Consent Banner -->
@@ -52,13 +51,13 @@
     <div id="exchange" class="tarjeta">
       <p>Cargando valor...</p>
     </div>
-    
-    <!-- Exchange fetch script -->
+
+    <!-- Scripts organizados -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const exchangeDiv = document.getElementById('exchange');
         exchangeDiv.innerHTML = '<p>Cargando valor...</p>';
-    
+
         fetch('/exchange/?from=USD&to=EUR&amount=100')
           .then(response => {
             if (!response.ok) throw new Error('Respuesta inválida');
@@ -78,9 +77,6 @@
       });
     </script>
     
-    
-
-    <!-- Weather Fetch Script -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         fetch('/weather/?city=Santander')
@@ -95,6 +91,7 @@
       });
     </script>
 
+    <!-- Cookie consent script -->
     <script src="{% static 'js/cookie_consent.js' %}"></script>
   </body>
 </html>
