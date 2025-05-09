@@ -8,7 +8,16 @@ body {
   text-align: center;
 }
 
-
+h1 {
+  display: block;
+  font-size: 3em;
+  line-height: 1.2;
+  background: linear-gradient(to top, #000000, #ff0000, #000000);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin: 20px 10px 10px 10px;
+  word-break: break-word;
+}
 
 p {
   font-size: 16px;
